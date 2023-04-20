@@ -38,9 +38,10 @@ public class Game
                         break;
                     case 2:
                         Console.WriteLine("Fighting some monsters...");
+                        gameEvents.CombatEvent(player);
                         break;
                         case 3:
-                        gameEvents.ChangePlayerName(player);
+                        gameEvents.ChangePlayerNameEvent(player);
                         break;
                     case 4:
                         Environment.Exit(0);

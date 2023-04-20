@@ -1,4 +1,6 @@
-﻿namespace Test;
+﻿using System.Diagnostics;
+
+namespace Test;
 
 public class GameEvents
 {
@@ -38,8 +40,7 @@ public class GameEvents
         return null;
     }
 
-
-    public void ChangePlayerName(Player player)
+    public void ChangePlayerNameEvent(Player player)
     {
         Console.Write("Enter your new name: ");
         try
@@ -55,8 +56,7 @@ public class GameEvents
     }
     public string PlayerShowStatsEvent(Player player)
     {
-        var playerStats = player;
-        return $"{playerStats.name}: Level: {playerStats.level}, Attack Power: {playerStats.attackPower}, Health Points: {playerStats.healthPoints}";
+        return $"{player.name}: Level: {player.level}, Attack Power: {player.attackPower}, Health Points: {player.healthPoints}";
     }
 
     public void ExperienceGainEvent(Player player, int xp)
@@ -101,6 +101,37 @@ public class GameEvents
 
     public void CombatEvent(Player player)
     {
+        Monster monster = new Monster(12, "Goblin", 2, 10, 10);
+
+        while (player.healthPoints > 0 && monster.healthPoints > 0)
+        {
+            string playerAttack = "Player attacks for " + player.attackPower + " damage.";
+            Console.WriteLine(playerAttack);
+
+            monster.healthPoints -= player.attackPower;
+
+            if (monster.healthPoints <= 0)
+            {
+                string monsterDefeated = "Monster is defeated. Player wins!";
+                Console.WriteLine(monsterDefeated);
+                break;
+            }
+
+            string monsterAttack = "Monster attacks for " + monster.attackPower + " damage.";
+            Console.WriteLine(monsterAttack);
+
+            player.healthPoints -= monster.attackPower;
+
+            if (player.healthPoints <= 0)
+            {
+                string playerDefeated = "Player is defeated. Monster wins!";
+                Console.WriteLine(playerDefeated);
+                break;
+            }
+        }
+
+
+
         // Not Yet Implemented
     }
-    }
+}
